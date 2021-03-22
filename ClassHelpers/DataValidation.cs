@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GameSubNumber.ClassHelpers
 {
+    /// <summary>
+    /// Вспомогательный класс, позволяющий сделать проверку вводимых чисел
+    /// </summary>
     internal static class DataValidation
     {
         public static int Level = 1;

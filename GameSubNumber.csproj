@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassHelpers\ComputerStep.cs" />
     <Compile Include="ClassHelpers\DataValidation.cs" />
     <Compile Include="ClassHelpers\ProgramClassHelper.cs" />
     <Compile Include="Models\User.cs" />

@@ -13,6 +13,8 @@ namespace GameSubNumber.Models
     {
         //Никнейм игрока
         public string UserName;
+        //Вспомогательный флаг
+        public int Flag=0;
 
     }
 }
