@@ -15,6 +15,7 @@ namespace GameSubNumber
         private static int Round = 0;
         private static int PlayerMove = 0;
         private static int Number = 0;
+        private static string InPut;
         static void Main(string[] args)
         {
             Console.WriteLine("Введите количество игроков");
@@ -33,7 +34,7 @@ namespace GameSubNumber
             //foreach (User obj in UsersList)
             //    Console.WriteLine(obj.UserName);
             Number = ProgramClassHelper.Number;
-            Console.WriteLine("Сгенерированное число: "+ Number);
+            Console.WriteLine("Сгенерированное число: " + Number);
             while (Number > 0)
             {
                 if (PlayerMove < UsersList.Count - 1)
@@ -42,10 +43,22 @@ namespace GameSubNumber
                     PlayerMove = 0;
                 Round++;
                 Console.WriteLine("Раунд {0}. Ход игрока {1}", Round, UsersList[PlayerMove].UserName);
+
                 Console.WriteLine("Введите число");
-                Number = Number - Convert.ToInt32(Console.ReadLine());
+                InPut = Console.ReadLine();
+                if (!DataValidation.Validation(InPut))
+                {
+                    do
+                    {
+                        Console.WriteLine("Вы указали некорректное число");
+                        Console.WriteLine("Введите число");
+                        InPut = Console.ReadLine();
+                    }
+                    while (!DataValidation.Validation(InPut));
+                }
+                Number = Number - Convert.ToInt32(InPut);
                 Console.WriteLine("Игровое число равно: " + Number);
-            } 
+            }
             Console.WriteLine("Игра окончена. Игрок " + UsersList[PlayerMove].UserName + " Одержал победу");
             Console.WriteLine("Игра закончена за {0} ходов", Round);
             Console.ReadLine();

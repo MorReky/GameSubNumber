@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace GameSubNumber.ClassHelpers
 {
-   public static class ProgramClassHelper
+    /// <summary>
+    /// Вспомогательный класс для генерации игрового числа
+    /// </summary>
+   internal static class ProgramClassHelper
     {
         public static int Number;
         static ProgramClassHelper()
         {
             Random random = new Random();
-            ProgramClassHelper.Number = random.Next(12, 120);
+            ProgramClassHelper.Number = random.Next(12, 121);
         }
     }
 }
