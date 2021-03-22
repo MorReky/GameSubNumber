@@ -11,15 +11,16 @@ namespace GameSubNumber
 {
     class Program
     {
-        private static int Players = 1;
+        private static uint Players = 1;
         private static int Round = 0;
         private static int PlayerMove = 0;
         private static int Number = 0;
         private static string Сommand;
-        private static string InPut;
+        private static string userTry;
         static void Main(string[] args)
         {
             Console.WriteLine("Добро пожаловать!");
+            Console.WriteLine("Правила этой игры просты.\n Компьютер выбирает случайное число в диапазоне 12-120. Задача каждого игрока первым привести это число к 0.\n Каким образом? Все также очень просто. Игроки совершают свой ход по очереди вводя числа в определенном диапазоне. Этот диапазон зависит от выбранного уровня сложности в настройках. По умолчанию это числа от 1 до 4(включительно).\n Кто раньше всех игроков привел загаданное число к 0, тот и победитель.\n Ну что, а теперь начнем!");
             while (true)
             {
                 Console.WriteLine("Для настройки игры введите 'Настройка'");
@@ -34,21 +35,21 @@ namespace GameSubNumber
                             Console.WriteLine("1:Ввод чисел от 1-4");
                             Console.WriteLine("2:Ввод чисел от 1-3");
                             Console.WriteLine("3:Ввод чисел от 1-2");
-                            InPut = Console.ReadLine();
-                            if (Convert.ToInt32(InPut) == 1 || Convert.ToInt32(InPut) == 2 || Convert.ToInt32(InPut) == 3)
+                            userTry = Console.ReadLine();
+                            if (Convert.ToInt32(userTry) == 1 || Convert.ToInt32(userTry) == 2 || Convert.ToInt32(userTry) == 3)
                             {
-                                DataValidation.Level = Convert.ToInt32(InPut);
+                                DataValidation.Level = Convert.ToInt32(userTry);
                                 Console.WriteLine("Сложность обновлена");
                             }
                             else
-                                Сommand = InPut;
+                                Сommand = userTry;
                             break;
                         }
                     case "Старт":
                         {
                             Console.WriteLine("Действует следующее правило:" + DataValidation.Level);
                             Console.WriteLine("Введите количество игроков. Для игры с компьютером введите '1'");
-                            Players = Convert.ToInt32(Console.ReadLine());
+                            Players = Convert.ToUInt32(Console.ReadLine());
                             IList<User> UsersList = new List<User>();
                             if (Players > 1)
                             {
@@ -78,7 +79,7 @@ namespace GameSubNumber
                                 UsersList.Add(Computer);
                             }
 
-                            Number = ProgramClassHelper.Number;
+                            Number = ProgramClassHelper.gameNumber;
                             Console.WriteLine("Сгенерированное число: " + Number);
                             while (Number > 0)
                             {
@@ -90,29 +91,30 @@ namespace GameSubNumber
                                 Console.WriteLine("");
                                 Console.WriteLine("");
                                 Console.WriteLine("Раунд {0}. Ход игрока {1}", Round, UsersList[PlayerMove].UserName);
+
+                                Console.WriteLine("Введите число");
                                 if (UsersList[PlayerMove].Flag == 0)
-                                {
-                                    Console.WriteLine("Введите число");
-                                    InPut = Console.ReadLine();
-                                }
+                                    userTry = Console.ReadLine();
                                 else
                                 {
-                                    InPut = Convert.ToString(ComputerStep.Step());
+                                    userTry = Convert.ToString(ComputerStep.Step());
+                                    Console.WriteLine(userTry);
                                 }
-                                if (!DataValidation.Validation(InPut))
+
+                                if (!DataValidation.Validation(userTry))
                                 {
                                     do
                                     {
                                         Console.WriteLine("Вы указали некорректное число");
                                         Console.WriteLine("Введите число");
-                                        InPut = Console.ReadLine();
+                                        userTry = Console.ReadLine();
                                     }
-                                    while (!DataValidation.Validation(InPut));
+                                    while (!DataValidation.Validation(userTry));
                                 }
-                                Number = Number - Convert.ToInt32(InPut);
+                                Number = Number - Convert.ToInt32(userTry);
                                 Console.WriteLine("Игровое число равно: " + Number);
                             }
-                            Console.WriteLine("Игра окончена. Игрок " + UsersList[PlayerMove].UserName + " Одержал победу");
+                            Console.WriteLine("Игра окончена. Игрок " + UsersList[PlayerMove].UserName + " Одержал победу. Поздравим его!");
                             Console.WriteLine("Игра закончена за {0} ходов", Round);
                             Console.ReadLine();
                             Console.WriteLine("Для настройки игры введите 'Настройка'");

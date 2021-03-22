@@ -11,11 +11,11 @@ namespace GameSubNumber.ClassHelpers
     /// </summary>
    internal static class ProgramClassHelper
     {
-        public static int Number;
+        public static int gameNumber;
         static ProgramClassHelper()
         {
             Random random = new Random();
-            Number = random.Next(12, 121);
+            gameNumber = random.Next(12, 121);
         }
     }
 }
