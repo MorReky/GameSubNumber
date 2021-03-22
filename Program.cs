@@ -15,54 +15,97 @@ namespace GameSubNumber
         private static int Round = 0;
         private static int PlayerMove = 0;
         private static int Number = 0;
+        private static string Сommand;
         private static string InPut;
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите количество игроков");
-            Players = Convert.ToInt32(Console.ReadLine());
-            IList<User> UsersList = new List<User>();
-            for (int i = 0; i < Players; i++)
+            Console.WriteLine("Добро пожаловать!");
+            while (true)
             {
-                Console.WriteLine("Введите ник для 'Игрок{0}'", i + 1);
-                User user = new User
+                Console.WriteLine("Для настройки игры введите 'Настройка'");
+                Console.WriteLine("Для старта введите 'Старт'");
+                Console.WriteLine("Для выхода введите 'Выход'");
+                Сommand = Console.ReadLine();
+                switch (Сommand)
                 {
-                    UserName = Console.ReadLine()
-                };
-                UsersList.Add(user);
-            }
-            //Console.WriteLine("Последовательность:");
-            //foreach (User obj in UsersList)
-            //    Console.WriteLine(obj.UserName);
-            Number = ProgramClassHelper.Number;
-            Console.WriteLine("Сгенерированное число: " + Number);
-            while (Number > 0)
-            {
-                if (PlayerMove < UsersList.Count - 1)
-                    PlayerMove++;
-                else
-                    PlayerMove = 0;
-                Round++;
-                Console.WriteLine("Раунд {0}. Ход игрока {1}", Round, UsersList[PlayerMove].UserName);
+                    case "Настройка":
+                        {
+                            Console.WriteLine("Для выбора сложности выберите соответствующее число, обозначающее уровень");
+                            Console.WriteLine("1:Ввод чисел от 1-4");
+                            Console.WriteLine("2:Ввод чисел от 1-3");
+                            Console.WriteLine("3:Ввод чисел от 1-2");
+                            InPut = Console.ReadLine();
+                            if (Convert.ToInt32(InPut) == 1 || Convert.ToInt32(InPut) == 2 || Convert.ToInt32(InPut) == 3)
+                            {
+                                DataValidation.Level = Convert.ToInt32(InPut);
+                                Console.WriteLine("Сложность обновлена");
+                            }
+                            else
+                                Сommand = InPut;
+                            break;
+                        }
+                    case "Старт":
+                        {
+                            Console.WriteLine("Действует следующее правило:" + DataValidation.Level);
+                            Console.WriteLine("Введите количество игроков");
+                            Players = Convert.ToInt32(Console.ReadLine());
+                            IList<User> UsersList = new List<User>();
+                            for (int i = 0; i < Players; i++)
+                            {
+                                Console.WriteLine("Введите ник для 'Игрок{0}'", i + 1);
+                                User user = new User
+                                {
+                                    UserName = Console.ReadLine()
+                                };
+                                UsersList.Add(user);
+                            }
 
-                Console.WriteLine("Введите число");
-                InPut = Console.ReadLine();
-                if (!DataValidation.Validation(InPut))
-                {
-                    do
-                    {
-                        Console.WriteLine("Вы указали некорректное число");
-                        Console.WriteLine("Введите число");
-                        InPut = Console.ReadLine();
-                    }
-                    while (!DataValidation.Validation(InPut));
+                            Number = ProgramClassHelper.Number;
+                            Console.WriteLine("Сгенерированное число: " + Number);
+                            while (Number > 0)
+                            {
+                                if (PlayerMove < UsersList.Count - 1)
+                                    PlayerMove++;
+                                else
+                                    PlayerMove = 0;
+                                Round++;
+                                Console.WriteLine("Раунд {0}. Ход игрока {1}", Round, UsersList[PlayerMove].UserName);
+
+                                Console.WriteLine("Введите число");
+                                InPut = Console.ReadLine();
+                                if (!DataValidation.Validation(InPut))
+                                {
+                                    do
+                                    {
+                                        Console.WriteLine("Вы указали некорректное число");
+                                        Console.WriteLine("Введите число");
+                                        InPut = Console.ReadLine();
+                                    }
+                                    while (!DataValidation.Validation(InPut));
+                                }
+                                Number = Number - Convert.ToInt32(InPut);
+                                Console.WriteLine("Игровое число равно: " + Number);
+                            }
+                            Console.WriteLine("Игра окончена. Игрок " + UsersList[PlayerMove].UserName + " Одержал победу");
+                            Console.WriteLine("Игра закончена за {0} ходов", Round);
+                            Console.ReadLine();
+                            Console.WriteLine("Для настройки игры введите 'Настройка'");
+                            Console.WriteLine("Для старта введите 'Старт'");
+                            Console.WriteLine("Для выхода введите 'Выход'");
+                            break;
+                        }
+                    case "Выход":
+                        {
+                            Environment.Exit(0);
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("Введенная комманда не обнаружена");
+                            break;
+                        }
                 }
-                Number = Number - Convert.ToInt32(InPut);
-                Console.WriteLine("Игровое число равно: " + Number);
             }
-            Console.WriteLine("Игра окончена. Игрок " + UsersList[PlayerMove].UserName + " Одержал победу");
-            Console.WriteLine("Игра закончена за {0} ходов", Round);
-            Console.ReadLine();
         }
     }
 }
-

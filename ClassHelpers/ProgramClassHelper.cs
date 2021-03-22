@@ -15,7 +15,7 @@ namespace GameSubNumber.ClassHelpers
         static ProgramClassHelper()
         {
             Random random = new Random();
-            ProgramClassHelper.Number = random.Next(12, 121);
+            Number = random.Next(12, 121);
         }
     }
 }
